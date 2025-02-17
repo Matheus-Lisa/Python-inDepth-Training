@@ -37,7 +37,9 @@
         Reversal	Reverse a string	"Python"[::-1] → "nohtyP"
 
 #5. String Methods
-
+    #String methods in Python are functions associated with string objects that allow manipulation, checking, or modifying string values. 
+    # These methods are called using the dot notation (string.method()).
+    
     #1. Case Conversion Methods
     .upper() = Converts all characters to uppercase
     .lower() = Converts all characters to lowercase
@@ -121,7 +123,9 @@
     .isdecimal() = Checks if string contains only decimal characters
 
 #6. String Formatting
-
+    #String formatting in Python is the process of creating dynamic strings by inserting values into placeholders. 
+    #Python offers multiple ways to format strings: using f-strings, .format(), and the older % formatting.
+    
     # 1. Using f-strings (Python 3.6+)
     name = "Alice"
     age = 25
@@ -169,7 +173,9 @@
     print(f"Curly braces: {{Hello}}")  = "Curly braces: {Hello}"
     
 #7. Escape Sequences
-
+    #Escape sequences are special character combinations in a string that represent certain characters or actions that are hard to type directly (e.g., newline, tab, backslash). 
+    #They begin with a backslash (\), signaling that the next character has a special meaning.
+    
     # 1. Newline (\n) - Moves to a new line
     print("Hello\nWorld")  # Output:
     # Hello
@@ -238,6 +244,178 @@
     # Line1
     # Line2   Tabbed
     # "Quoted"
+
+
+#8. Raw Strings
+    #Raw strings are string literals prefixed with an r or R, where backslashes are treated as normal characters and escape sequences are ignored. 
+    #They are useful when dealing with paths, regular expressions, and other situations where escape sequences would be problematic.
+    # 1. Raw String Basics
+    raw_string = r"Hello\nWorld"
+    print(raw_string)  
+    # Output: Hello\nWorld (Backslash remains as part of the string)
+
+    normal_string = "Hello\nWorld"
+    print(normal_string)  
+    # Output:
+    # Hello
+    # World  (Newline applied)
+
+    # 2. File Paths (Avoiding Escape Issues)
+    # Incorrect usage:
+    path = "C:\new_folder\name"
+    print(path)  
+    # Output: C:
+    # ew_folder
+    # ame (Interprets `\n` and `\t` as escape characters)
+
+    # Correct usage:
+    path = r"C:\new_folder\name"
+    print(path)  
+    # Output: C:\new_folder\name  (Backslashes remain as intended)
+
+    # Alternative using double backslashes:
+    path = "C:\\new_folder\\name"
+    print(path)  
+    # Output: C:\new_folder\name
+
+    # 3. Regular Expressions (Regex)
+    import re
+
+    # Without raw strings (hard to read)
+    pattern = "\\d{3}-\\d{2}-\\d{4}"  # Matches 123-45-6789
+    print(re.match(pattern, "123-45-6789"))
+
+    # Using a raw string (more readable)
+    pattern = r"\d{3}-\d{2}-\d{4}"
+    print(re.match(pattern, "123-45-6789"))
+
+    # 4. JSON, URLs, and LaTeX Examples
+    # JSON Example
+    json_string = r'{"path": "C:\new_folder"}'
+    print(json_string)
+    # Output: {"path": "C:\new_folder"}
+
+    # URL Example
+    url = r"https://example.com/search?q=name\value"
+    print(url)
+    # Output: https://example.com/search?q=name\value
+
+    # LaTeX Example
+    latex_code = r"\frac{a}{b} = c"
+    print(latex_code)
+    # Output: \frac{a}{b} = c
+
+    # 5. Edge Cases
+    # Raw strings cannot end with a single backslash:
+    # bad_raw_string = r"Hello\"  # This will cause an error!
+
+    # Correct approach:
+    good_raw_string = r"Hello\\"
+    print(good_raw_string)  # Output: Hello\\
+
+    # 6. Mixing Raw Strings with Normal Strings
+    print(r"RawString" + "\nNewLine")  
+    # Output:
+    # RawString
+    # NewLine
+
+    # 7. Summary
+    print(r"✅ Raw strings (`r''`) treat `\` as normal characters")
+    print(r"✅ Useful for Windows paths, regex, JSON, URLs, LaTeX")
+    print(r"✅ Cannot end with a single `\`")
+    print(r"✅ Improves readability and avoids unnecessary escaping")
+
+#9. Encoding & Decoding
     
+    #Encoding:
+    #Encoding is the process of converting data from one format into another. 
+    #In the context of text, encoding refers to converting a string (human-readable text) into a sequence of bytes (binary data) that can be stored, transmitted, or processed by computers. 
+    #This is done using a specific character encoding scheme, which determines how characters are represented as bytes.
+    
+    #Decoding:
+    #Decoding is the reverse process of encoding. 
+    #It involves converting the encoded byte sequence back into its original format (usually a string). 
+    #Decoding is needed when you receive or read encoded data and want to convert it back to human-readable text.
+    
+    # 1. **What is Encoding?**
+    # Encoding is the process of converting a string (text) into a specific format that can be stored or transmitted.
+    # In Python, encoding refers to converting a string into a byte sequence (binary format) using a particular character encoding.
+
+    # Example: Encoding a string to bytes (UTF-8 encoding)
+    text = "Hello, World!"
+    encoded_text = text.encode("utf-8")  # Encodes the string to bytes using UTF-8 encoding
+    print(encoded_text)  # Output: b'Hello, World!' (Encoded as bytes)
+
+    # **Common encodings**:
+    # - UTF-8 (default in Python)
+    # - ASCII
+    # - Latin-1
+    # - UTF-16
+
+    # 2. **What is Decoding?**
+    # Decoding is the process of converting the encoded byte sequence back into a string, reversing the encoding process.
+
+    # Example: Decoding bytes back to a string
+    decoded_text = encoded_text.decode("utf-8")  # Decodes the byte sequence back into a string
+    print(decoded_text)  # Output: "Hello, World!" (Decoded back to string)
+
+    # **Common errors while decoding**:
+    # - `UnicodeDecodeError`: When the byte sequence cannot be decoded using the specified encoding.
+
+    # 3. **Encoding and Decoding with Different Encodings**
+    # You can encode and decode strings using various encodings. The most common encoding is UTF-8, but there are others like ASCII, Latin-1, etc.
+
+    # Example: Using ASCII encoding (only works with characters in the ASCII range)
+    ascii_encoded = text.encode("ascii")
+    print(ascii_encoded)  # Output: b'Hello, World!'
+
+    # Decoding the ASCII encoded byte sequence
+    ascii_decoded = ascii_encoded.decode("ascii")
+    print(ascii_decoded)  # Output: "Hello, World!"
+
+    # **Note:** If you try to encode non-ASCII characters with ASCII, you will get an error:
+    # ascii_encoded_error = "你好".encode("ascii")  # This will raise an error!
+
+    # 4. **Common Encoding Methods**
+    # - **.encode()**: Converts a string to bytes using the specified encoding.
+    # - **.decode()**: Converts bytes back into a string using the specified encoding.
+
+    # Example of encoding and decoding:
+    text = "Python is fun!"
+    encoded = text.encode("utf-8")  # Encodes the string to bytes
+    print(f"Encoded: {encoded}")
+
+    # Decode back to string:
+    decoded = encoded.decode("utf-8")  # Decodes the byte sequence back to string
+    print(f"Decoded: {decoded}")
+
+    # 5. **Handling Errors in Encoding and Decoding**
+    # You can specify how to handle errors during encoding or decoding with the `errors` parameter.
+
+    # Example: Handling errors during decoding using 'ignore' and 'replace'
+    byte_data = b"Hello, \xe2\x98\x83!"  # The byte sequence contains an invalid character
+    decoded_ignore = byte_data.decode("utf-8", errors="ignore")  # Ignores the invalid character
+    print(f"Decoded with 'ignore': {decoded_ignore}")  # Output: "Hello, !"
+
+    decoded_replace = byte_data.decode("utf-8", errors="replace")  # Replaces the invalid character
+    print(f"Decoded with 'replace': {decoded_replace}")  # Output: "Hello, �!" (Replaces with replacement character)
+
+    # 6. **Why Encoding and Decoding are Important?**
+    # - **Data transmission**: When sending data over networks, text needs to be encoded into bytes.
+    # - **Data storage**: Text files store data as encoded byte sequences.
+    # - **Unicode**: Encoding ensures that text can represent a wide range of characters from different languages.
+
+    # Example: Storing and reading data in files
+    # Write encoded text to a file
+    with open("encoded_text.txt", "wb") as f:
+        f.write(encoded)
+
+    # Read and decode text from the file
+    with open("encoded_text.txt", "rb") as f:
+        encoded_data = f.read()
+        decoded_text_from_file = encoded_data.decode("utf-8")
+        print(f"Decoded from file: {decoded_text_from_file}")
+        
+
 
 
